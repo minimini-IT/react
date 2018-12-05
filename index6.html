@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>React Practice</title>
+  <link rel="stylesheet" href="css/styles6.css">
+  <!-- React本体 -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <!-- Reactの結果をブラウザのDOMに反映させる -->
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- JSX,JavaScriptの新しい文法を使用するためのライブラリ「Babel」
+       本番環境では使用してはいけない -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></dir>
+<script type="text/babel">
+//↓JSX記法 ↓
+(() => {
+  function Counter(props){
+    //引数を受け取る
+//    function countUp(color){
+//      alert(color);
+//    }
+//aタグの画面遷移を防ぐ
+//e -> イベントオブジェクト
+    function countUp(e, color){
+      e.preventDefault();
+      alert(color);
+    }
+//    return (
+//      <li style={{backgroundColor: props.color}} onClick={countUp}>
+//        0
+//      </li>
+//    );
+
+//引数を渡す
+  //無名関数()をonClickに渡してやる  onClick={()=> countUp(props.color)}
+  //  return (
+  //    <li style={{backgroundColor: props.color}} onClick={()=> countUp(props.color)}>
+  //      0
+  //    </li>
+  //  );
+
+  //aタグにonClickをつける
+      //hrefはダミー。画面変異させないようにする
+      //(e) -> イベントオブジェクト
+      //アロー関数()=>で、引数が一つの場合は()を省略できる
+    return (
+      <li style={{backgroundColor: props.color}}>
+        <a href="#" onClick={(e)=> countUp(e, props.color)}>
+        0
+        </a>
+      </li>
+    );
+  }
+  ReactDOM.render(
+    <div className="container">
+      <ul>
+        <Counter color="tomato"/>
+        <Counter color="skyblue"/>
+        <Counter color="limegreen"/>
+      </ul>
+    </div>,
+    document.getElementById("root")
+  );
+  })();
+</script>
+</body>
+</html>

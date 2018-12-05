@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>React Practice</title>
+  <link rel="stylesheet" href="css/styles7.css">
+  <!-- React本体 -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <!-- Reactの結果をブラウザのDOMに反映させる -->
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- JSX,JavaScriptの新しい文法を使用するためのライブラリ「Babel」
+       本番環境では使用してはいけない -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></dir>
+<script type="text/babel">
+//↓JSX記法 ↓
+(() => {
+  //Counter Componentはもうclassである必要は無くなったので関数化する
+  function Counter(props){
+    return(
+      <li style={{backgroundColor: props.counter.color}}>
+        {props.counter.id}:{props.counter.count}
+      </li>
+    );
+  }
+  //class Counter extends React.Component{
+  //  constructor(props){
+  //    super(props);
+  //    this.state = {
+  //      count: 0,
+  //    };
+  //    this.countUp = this.countUp.bind(this);
+  //  }
+  //  countUp(){
+  //    this.setState(prevState => {
+  //      return {
+  //        count: prevState.count + 1
+  //      };
+  //    });
+  //  }
+  //  render(){
+  //    return(
+  //      <li style={{backgroundColor:this.props.color}} onClick={this.countUp}>
+  //        {this.state.count}
+  //      </li>
+  //    );
+  //  }
+  //}
+
+//counterの情報はApp Componentで一元管理する
+  class App extends React.Component {
+    //constructor()と親クラスsuper()を忘れない
+    constructor(){
+      super();
+      this.state = {
+        //複数の情報を管理する　idとcountとcolor
+        counters: [
+          {id: "A", count: 0, color: "tomato"},
+          {id: "B", count: 0, color: "skyblue"},
+          {id: "C", count: 0, color: "limegreen"}
+        ]};
+    }
+    render(){
+      return(
+        <div className="container">
+          <ul>
+            <Counter counter={this.state.counters[0]}/>
+            <Counter counter={this.state.counters[1]}/>
+            <Counter counter={this.state.counters[2]}/>
+          </ul>
+          <div>TOTAL INCENTORY: 3</div>
+        </div>
+      );
+    }
+  }
+
+//stateを持つComponentは最小限にする
+//他のComponentには極力値を持たせないようにする
+
+  ReactDOM.render(
+    <App/>,
+    document.getElementById("root")
+  );
+  })();
+</script>
+</body>
+</html>

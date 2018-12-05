@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>React Practice</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- React本体 -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <!-- Reactの結果をブラウザのDOMに反映させる -->
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- JSX,JavaScriptの新しい文法を使用するためのライブラリ「Babel」
+       本番環境では使用してはいけない -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></dir>
+<script type="text/babel">
+//↓JSX記法 
+(() => {
+  const name = "ito";
+  ReactDOM.render(
+    //<p>Hello! {name.toUpperCase()}</p>,
+    //表示できるタグは1つだけ（複数ある場合は1つで囲む<div>とか）
+    //<p>Hello</p><p>World</p> -> エラー
+    <div>
+      <p>Hello</p>
+      <p>World</p>
+    </div>,
+    //<hr>等の閉じタグがない場合は<hr/>で
+    document.getElementById("root")
+  );
+  })();
+</script>
+</body>
+</html>

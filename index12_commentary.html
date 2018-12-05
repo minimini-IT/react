@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>React Practice</title>
+  <link rel="stylesheet" href="css/styles7.css">
+  <!-- React本体 -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <!-- Reactの結果をブラウザのDOMに反映させる -->
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- JSX,JavaScriptの新しい文法を使用するためのライブラリ「Babel」
+       本番環境では使用してはいけない -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></dir>
+<script type="text/babel">
+//↓JSX記法 ↓
+(() => {
+  //引数受け取り(props)
+  function Counter(props){
+    return(
+      //props[0] = {id: "A", count: 0, color: "tomato"},
+      //props.counter.color = "tomato"
+      <li style={{backgroundColor: props.counter.color}}>
+        //props.counter.id = "A"
+        //props.counter.count = "0"
+        {props.counter.id}:{props.counter.count}
+      </li>
+    );
+  }
+  //App Component class
+  class App extends React.Component {
+    //constructor 呼び出し
+    constructor(){
+      //親class
+      super();
+      //stateで情報管理 thisはお約束
+      this.state = {
+        counters: [
+          {id: "A", count: 0, color: "tomato"},
+          {id: "B", count: 0, color: "skyblue"},
+          {id: "C", count: 0, color: "limegreen"}
+        ]};
+    }
+    // -------- ここまでデータ部分　htmlで言うheader ----------------
+    // -------- ここからブラウザに反映させる部分 htmlで言うbody ------------
+    //render(){ return(); } はお約束
+    render(){
+      return(
+      //classはclassName=
+        <div className="container">
+          <ul>
+            //Counter関数の呼び出し counter=で引数指定
+            //今回の引数はstateのcounters
+            <Counter counter={this.state.counters[0]}/>
+            <Counter counter={this.state.counters[1]}/>
+            <Counter counter={this.state.counters[2]}/>
+          </ul>
+          <div>TOTAL INCENTORY: 3</div>
+        </div>
+      );
+    }
+  }
+  ReactDOM.render(
+    //App Component 呼び出し
+    <App/>,  
+    //ID "root" にApp Componentを埋め込む
+    document.getElementById("root")
+  );
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>React Practice</title>
+  <link rel="stylesheet" href="css/styles7.css">
+  <!-- React本体 -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <!-- Reactの結果をブラウザのDOMに反映させる -->
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- JSX,JavaScriptの新しい文法を使用するためのライブラリ「Babel」
+       本番環境では使用してはいけない -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></dir>
+<script type="text/babel">
+//まとめ
+//ReactではComponent単位で管理して機能を拡張、再利用する
+//Counterを増やすならstateのcountersの配列を増やせば良い
+//見た目を変えるならCounter Componentをいじる
+//↓JSX記法 
+(() => {
+  function Counter(props){
+    return(
+      <li style={{backgroundColor: props.counter.color}} onClick={() => props.countUp(props.counter)}>
+        {props.counter.id}-({props.counter.count})
+      </li>
+    );
+  }
+  function CounterList(props){
+    const counters = props.counters.map(counter => {
+      return(
+        <Counter 
+          counter={counter} key={counter.id} countUp={props.countUp}
+        />
+      );
+    });
+    return(
+      <ul>
+        {counters}
+      </ul>
+    );
+  }
+  class App extends React.Component {
+    constructor(){
+      super();
+      //総数TOTALの管理
+      this.state = {
+        counters: [
+          {id: "A", count: 0, color: "tomato"},
+          {id: "B", count: 0, color: "skyblue"},
+          {id: "C", count: 0, color: "limegreen"},
+          {id: "D", count: 0, color: "gray"},
+          {id: "E", count: 0, color: "pink"}
+        ],
+        total: 0
+      };
+      this.countUp = this.countUp.bind(this);
+    }
+    countUp(counter){
+      this.setState(prevState => {
+        const counters = prevState.counters.map(counter => {
+          return{id: counter.id, count: counter.count, color: counter.color};
+        });
+        const pos = counters.map(counter => {
+          return counter.id;
+        }).indexOf(counter.id);
+        counters[pos].count++;
+        //totalも増やしていく
+        return {
+          counters: counters,
+          total: prevState.total + 1
+        };
+      });
+    }
+    //TOTALを表示
+    render(){
+      return(
+        <div className="container">
+          <CounterList 
+            counters={this.state.counters}
+            countUp={this.countUp}
+          />
+          <div>TOTAL INCENTORY: {this.state.total}</div>
+        </div>
+      );
+    }
+  }
+  ReactDOM.render(
+    <App/>,
+    document.getElementById("root")
+  );
+  })();
+</script>
+</body>
+</html>

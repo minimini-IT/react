@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>React Practice</title>
+  <link rel="stylesheet" href="css/styles7.css">
+  <!-- React本体 -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <!-- Reactの結果をブラウザのDOMに反映させる -->
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- JSX,JavaScriptの新しい文法を使用するためのライブラリ「Babel」
+       本番環境では使用してはいけない -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></dir>
+<script type="text/babel">
+//↓JSX記法 ↓
+(() => {
+  function Counter(props){
+    return(
+      <li style={{backgroundColor: props.counter.color}} onClick={() => props.countUp(props.counter)}>
+        {props.counter.id}:{props.counter.count}
+      </li>
+    );
+  }
+  function CounterList(props){
+    const counters = props.counters.map(counter => {
+      return(
+        <Counter 
+          counter={counter} key={counter.id} countUp={props.countUp}
+        />
+      );
+    });
+    return(
+      <ul>
+        {counters}
+      </ul>
+    );
+  }
+  class App extends React.Component {
+    constructor(){
+      super();
+      this.state = {
+        counters: [
+          {id: "A", count: 0, color: "tomato"},
+          {id: "B", count: 0, color: "skyblue"},
+          {id: "C", count: 0, color: "limegreen"}
+        ]
+      };
+      this.countUp = this.countUp.bind(this);
+    }
+    //countUp Component作成
+    //引数で渡ってきたcounterと同じidを持つデータのcountを1増やす
+    countUp(counter){
+      this.setState(prevState => {
+        //countersのコピー作成
+        //.map()->それぞれの要素をcounterとする
+          //return -> 全てのプロパティの値をそのままコピー -> 直前のstateの値のcountersのコピー
+        const counters = prevState.counters.map(counter => {
+          return{id: counter.id, count: counter.count, color: counter.color};
+        });
+        //counterのidを元にcountを増やしたい要素の順番を調べる
+        //ここのcountersは↑で作成したcounters
+        //一つ一つの要素をcounterとする
+          //idを返して(return)、渡ってきたidは何番目かをindexOfで調べる
+        const pos = counters.map(counter => {
+          return counter.id;
+        }).indexOf(counter.id);
+        //counterのidを持つデータが何番目かわかったのでcountersのpos番のcountを1増やす
+        counters[pos].count++;
+        //値のセット　countersのキーで書き換えたcountersを渡す
+        return {
+          counters: counters
+        };
+      });
+    }
+    render(){
+      return(
+        <div className="container">
+          <CounterList 
+            counters={this.state.counters}
+            countUp={this.countUp}
+          />
+          <div>TOTAL INCENTORY: 3</div>
+        </div>
+      );
+    }
+  }
+  ReactDOM.render(
+    <App/>,
+    document.getElementById("root")
+  );
+  })();
+</script>
+</body>
+</html>

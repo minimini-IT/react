@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>React Practice</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- React本体 -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <!-- Reactの結果をブラウザのDOMに反映させる -->
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- JSX,JavaScriptの新しい文法を使用するためのライブラリ「Babel」
+       本番環境では使用してはいけない -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></dir>
+<script type="text/babel">
+//↓JSX記法 ↓
+(() => {
+//reactではComponentと言う独自のタグを作成できる
+//Componentの頭文字は必ず大文字
+  function Counter(props){
+    //return <div>0</div>;
+    //引数をつけて属性を受け取る
+    //引数で受け取ったオブジェクトは読み取り専用のため、代入等で書き換えできない
+      //props.color = "red"; <- error
+    
+    //↓受け取ったオブジェクトを単に出力しているだけ
+    return <div>0{props.color}</div>;
+    //出力：0tomato
+  }
+//こうすればタグ１つ縛りも関係なく表示できる
+    //Componentに属性をつければ異なった表示も可能
+    //属性を受け取るにはComponentに引数をつける
+  ReactDOM.render(
+    <div>
+      <Counter color="tomato"/>
+      <Counter color="skyblue"/>
+      <Counter color="limegreen"/>
+    </div>,
+    document.getElementById("root")
+
+  );
+  })();
+</script>
+</body>
+</html>
